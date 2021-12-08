@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import './Optionpage.dart';
 
 class launcher extends StatefulWidget {
-  const launcher({Key? key}) : super(key: key);
+
 
   @override
   _launcherState createState() => _launcherState();
@@ -17,7 +17,7 @@ class _launcherState extends State<launcher> {
     super.initState();
     Timer(
         Duration(seconds: 5),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        () => Navigator.pushReplacement(context,MaterialPageRoute(
             builder: (BuildContext context) => MakeChoice())));
   }
 
