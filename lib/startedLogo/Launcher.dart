@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './Optionpage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class launcher extends StatefulWidget {
-
-
   @override
   _launcherState createState() => _launcherState();
 }
@@ -17,8 +16,10 @@ class _launcherState extends State<launcher> {
     super.initState();
     Timer(
         Duration(seconds: 5),
-        () => Navigator.pushReplacement(context,MaterialPageRoute(
-            builder: (BuildContext context) => MakeChoice())));
+        () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => MakeChoice())));
   }
 
   @override
@@ -30,8 +31,12 @@ class _launcherState extends State<launcher> {
       child: Column(
         children: [
           Image.asset("Assest/images/logo.png", width: 200, height: 300),
-          Text("Getwork",
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+          Text(
+            "GetJob",
+            style: GoogleFonts.roboto(
+                textStyle:
+                    TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+          ),
         ],
       ),
     );
