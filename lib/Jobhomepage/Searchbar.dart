@@ -20,14 +20,13 @@ class _searchBarState extends State<searchBar> {
   }
 
 // The currently searched-for term
-    String selectedTerm="";
+     String selectedTerm="";
 
 // The "raw" history that we don't access from the UI, prefilled with values
   List<String> _searchHistory = [
-    'fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',
+    'Any',
+    'Information Technology',
+    'general labour',
   ];
 
   late List<String> filteredSearchHistory;
@@ -78,6 +77,7 @@ class _searchBarState extends State<searchBar> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: FloatingSearchBar(
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
@@ -90,7 +90,7 @@ class _searchBarState extends State<searchBar> {
             physics: BouncingScrollPhysics(),
             // Title is displayed on an unopened (inactive) search bar
             title: Text(
-              selectedTerm ?? 'search job',
+              selectedTerm,
               style: Theme.of(context).textTheme.headline6,
             ),
             // Hint gets displayed once the search bar is tapped and opened

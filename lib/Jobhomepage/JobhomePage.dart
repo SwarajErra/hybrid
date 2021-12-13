@@ -11,11 +11,6 @@ class jobhomePage extends StatefulWidget {
 }
 
 class _jobhomePageState extends State<jobhomePage> {
-  static const historyLenght = 5;
-  Iterable<String> _searchHistory =
-      ['fuchsia', 'flutter', 'new iteam'].reversed;
-  List<String> filteredSearchHistory = [];
-  String titleInput = "";
 
   @override
   Widget build(BuildContext context) {
