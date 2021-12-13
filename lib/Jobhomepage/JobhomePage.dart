@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/Jobhomepage/Searchbar.dart';
 import 'package:hybrid/drawer/Navigationdrawer.dart';
 
 class jobhomePage extends StatefulWidget {
@@ -10,14 +11,17 @@ class jobhomePage extends StatefulWidget {
 }
 
 class _jobhomePageState extends State<jobhomePage> {
+  static const historyLenght = 5;
+  Iterable<String> _searchHistory =
+      ['fuchsia', 'flutter', 'new iteam'].reversed;
+  List<String> filteredSearchHistory = [];
   String titleInput = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:
-        Image.asset(
+        leading: Image.asset(
           'Assest/images/logoNew.png',
         ),
         actionsIconTheme: IconThemeData(color: Colors.yellow, size: 36),
@@ -26,27 +30,11 @@ class _jobhomePageState extends State<jobhomePage> {
         titleSpacing: 7,
         title: Text(
           "Getjob",
-          style: GoogleFonts.roboto(fontSize: 25,color: Colors.white),
+          style: GoogleFonts.roboto(fontSize: 25, color: Colors.white),
         ),
       ),
       endDrawer: navigationDrawer(),
-      body: Card(
-        child: Container(
-          padding: EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  titleInput = value;
-                },
-                decoration: InputDecoration(labelText: "Search jobs"),
-                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: searchBar(),
     );
   }
 }
