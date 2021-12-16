@@ -29,7 +29,7 @@ class _jobhomePageState extends State<jobhomePage> {
         ),
       ),
       endDrawer: navigationDrawer(),
-      body: searchBar(),
+      body: searchBar(key: UniqueKey()),
     );
   }
 }
