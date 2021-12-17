@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:hybrid/Jobhomepage/JobhomePage.dart';
-import 'package:hybrid/Jobhomepage/profilePage.dart';
+import 'package:hybrid/Employer%20job%20homePage/profilePage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class employeerHomePage extends StatefulWidget {
