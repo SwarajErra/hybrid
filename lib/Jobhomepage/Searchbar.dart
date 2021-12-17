@@ -60,7 +60,8 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
+            
+            Text('job type ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
               Text('Company name ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
               Text('Company location ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
               Text('Pay rate ---',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),

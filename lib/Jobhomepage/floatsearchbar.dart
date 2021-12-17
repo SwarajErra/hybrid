@@ -78,6 +78,8 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
+      elevation: 20,
+      automaticallyImplyBackButton: false,
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultsListView(

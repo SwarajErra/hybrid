@@ -30,7 +30,7 @@ class SearchResultsListView extends StatelessWidget {
         ),
       );
     }
-    final fsb = FloatingSearchBar.of(context);
+
 
       return Row(children: [],);
   }
