@@ -20,59 +20,68 @@ class _employeerHomePageState extends State<employeerHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor:
+          Colors.orange,
+        ),
         body: Container(
           margin: EdgeInsets.all(12),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 TextField(
-                  onChanged: (value) {
-                    jobType = value;
-                  },
-                  decoration: InputDecoration(labelText: "Job type"),
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                ),
+                    onChanged: (value) {
+                      jobType = value;
+                    },
+                    decoration: InputDecoration(labelText: "Job type"),
+                    style: GoogleFonts.roboto(
+                      textStyle: TextStyle(fontSize: 20)
+                    )),
                 TextField(
-                  onChanged: (value) {
-                    companyName = value;
-                  },
-                  decoration: InputDecoration(labelText: "Company name"),
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                ),
+                    onChanged: (value) {
+                      companyName = value;
+                    },
+                    decoration: InputDecoration(labelText: "Company name"),
+                    style: GoogleFonts.roboto(
+                      textStyle: TextStyle(fontSize: 20)
+                    )),
                 TextField(
-                  onChanged: (value) {
-                    companyLocation = value;
-                  },
-                  decoration: InputDecoration(labelText: "Company location"),
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                ),
+                    onChanged: (value) {
+                      companyLocation = value;
+                    },
+                    decoration: InputDecoration(labelText: "Company location"),
+                    style: GoogleFonts.roboto(
+                      textStyle: TextStyle(fontSize: 20)
+                    )),
                 TextField(
                   onChanged: (value) {
                     payrate = value as double;
                   },
                   decoration: InputDecoration(labelText: "pay rate"),
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                  style: GoogleFonts.roboto(
+                    textStyle: TextStyle(fontSize: 20)
+                  ),
                 ),
-
                 TextField(
                   onChanged: (value) {
                     jobDescrebtion = value;
                   },
                   decoration: InputDecoration(labelText: "job description"),
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                  style: GoogleFonts.roboto(
+                    textStyle: TextStyle(fontSize: 20)
+                  ),
                 ),
-                SizedBox(height: 40,),
+                SizedBox(
+                  height: 40,
+                ),
                 ElevatedButton(
                   onPressed: () {},
-
-                  style:
-                  ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                     elevation: 10,
                     padding: EdgeInsets.all(14),
                     primary: Colors.orange,
-                    ),
-
+                    shape: StadiumBorder(),
+                  ),
                   child: GradientText(
                     'Post a job',
                     style: GoogleFonts.roboto(
