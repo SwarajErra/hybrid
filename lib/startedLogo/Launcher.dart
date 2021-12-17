@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './Optionpage.dart';
+import 'package:hybrid/signin/SignIn.dart';
+import './MakeChoice.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class launcher extends StatefulWidget {
@@ -19,7 +20,7 @@ class _launcherState extends State<launcher> {
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => MakeChoice())));
+                builder: (BuildContext context) => signIn(key:UniqueKey()))));
   }
 
   @override

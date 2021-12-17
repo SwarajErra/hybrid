@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/Employer%20job%20homePage/EmployerHomePage.dart';
 import 'package:hybrid/Jobhomepage/JobhomePage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -17,13 +18,27 @@ class _MakeChoiceState extends State<MakeChoice> {
           color: Colors.white,
           child: Column(
             children: [
-              SizedBox(height:100),
-              Image.asset("Assest/images/logo.png",height: 200,width: 200,alignment: Alignment.center,fit:BoxFit.fill,),
-              Text("GetJob",style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 40,fontWeight: FontWeight.normal,)),),
+              SizedBox(height: 100),
+              Image.asset(
+                "Assest/images/logo.png",
+                height: 200,
+                width: 200,
+                alignment: Alignment.center,
+                fit: BoxFit.fill,
+              ),
+              Text(
+                "GetJob",
+                style: GoogleFonts.roboto(
+                    textStyle: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.normal,
+                )),
+              ),
               SizedBox(height: 60),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       children: [
@@ -52,7 +67,7 @@ class _MakeChoiceState extends State<MakeChoice> {
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 20,
-                              padding: EdgeInsets.all(18),
+                              padding: EdgeInsets.all(14),
                               primary: Colors.transparent,
                             ),
                             child: GradientText(
@@ -91,10 +106,16 @@ class _MakeChoiceState extends State<MakeChoice> {
                                 end: Alignment.centerRight,
                               )),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => employeerHomePage()),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                                 elevation: 20,
-                                padding: EdgeInsets.all(18),
+                                padding: EdgeInsets.all(14),
                                 primary: Colors.transparent),
                             child: GradientText(
                               'Post jobs',

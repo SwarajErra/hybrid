@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import './searchresultlistview.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/Jobhomepage/floatsearchbar.dart';
+
 class searchBar extends StatefulWidget {
   const searchBar({Key? key}) : super(key: key);
 
@@ -9,180 +12,89 @@ class searchBar extends StatefulWidget {
 }
 
 class _searchBarState extends State<searchBar> {
-  late FloatingSearchBarController controller;
-  static const historyLength = 4;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-// The currently searched-for term
-     String selectedTerm="";
-
-// The "raw" history that we don't access from the UI, prefilled with values
-  List<String> _searchHistory = [
-    'Any',
-    'Information Technology',
-    'general labour',
-  ];
-
-  late List<String> filteredSearchHistory;
-
-  List<String> filterSearchTerms({
-    String? filter,
-  }) {
-    if (filter != null && filter.isNotEmpty) {
-      // Reversed because we want the last added items to appear first in the UI
-      return _searchHistory.reversed
-          .where((term) => term.startsWith(filter))
-          .toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
-  }
-
-  void addSearchTerm(String term) {
-    if (_searchHistory.contains(term)) {
-      // This method will be implemented soon
-      putSearchTermFirst(term);
-      return;
-    }
-    _searchHistory.add(term);
-    if (_searchHistory.length > historyLength) {
-      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
-    }
-    // Changes in _searchHistory mean that we have to update the filteredSearchHistory
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-  void deleteSearchTerm(String term) {
-    _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-  void putSearchTermFirst(String term) {
-    deleteSearchTerm(term);
-    addSearchTerm(term);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-  
-
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: FloatingSearchBar(
-        controller: controller,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm, key: UniqueKey() ,
-          ),
-        ),
-            transition: CircularFloatingSearchBarTransition(),
-            // Bouncing physics for the search history
-            physics: BouncingScrollPhysics(),
-            // Title is displayed on an unopened (inactive) search bar
-            title: Text(
-              selectedTerm,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            // Hint gets displayed once the search bar is tapped and opened
-            hint: 'Find future jobs...',
-            actions: [
-              //action is ude to clear seacrh bar
-              FloatingSearchBarAction.searchToClear(),
-            ],
-            onQueryChanged: (query) {
-              setState(() {
-                filteredSearchHistory = filterSearchTerms(filter: query);
-              });
-            },
-            onSubmitted: (query) {
-              setState(() {
-                addSearchTerm(query);
-                selectedTerm = query;
-              });
-              controller.close();
-            },
-            builder: (context, transition) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Material(
-                  color: Colors.white,
-                  elevation: 4,
-                  child: Builder(
-                    builder: (context) {
-                      if (filteredSearchHistory.isEmpty &&
-                          controller.query.isEmpty) {
-                        return Container(
-                          height: 56,
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Search jobs',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                        );
-                      } else if (filteredSearchHistory.isEmpty) {
-                        return ListTile(
-                          title: Text(controller.query),
-                          leading: const Icon(Icons.search),
-                          onTap: () {
-                            setState(() {
-                              addSearchTerm(controller.query);
-                              selectedTerm = controller.query;
-                            });
-                            controller.close();
-                          },
-                        );
-                      } else {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: filteredSearchHistory
-                              .map(
-                                (term) => ListTile(
-                                  title: Text(
-                                    term,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  leading: const Icon(Icons.history),
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () {
-                                      setState(() {
-                                        deleteSearchTerm(term);
-                                      });
-                                    },
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      putSearchTermFirst(term);
-                                      selectedTerm = term;
-                                    });
-                                    controller.close();
-                                  },
-                                ),
-                              )
-                              .toList(),
-                        );
-                      }
-                    },
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.fromLTRB(10, 70, 10, 10),
+          color: Colors.black,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      dynamicJobCard(),
+                      dynamicJobCard(),
+                      dynamicJobCard(),
+                      dynamicJobCard(),
+                      dynamicJobCard(),
+                      dynamicJobCard(),
+                    ],
                   ),
                 ),
-              );
-            },
+              ),
+            ],
           ),
-        );
+        ),
+        FloatSearchBar(),
+      ],
+    );
   }
 }
 
+class dynamicJobCard extends StatefulWidget {
+  const dynamicJobCard({Key? key}) : super(key: key);
+
+  @override
+  _dynamicJobCardState createState() => _dynamicJobCardState();
+}
+
+class _dynamicJobCardState extends State<dynamicJobCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        height: 190,
+        width: 400,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('job type ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
+              Text('Company name ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
+              Text('Company location ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
+              Text('Pay rate ---',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.normal))),
+              Text('job description ----',style: GoogleFonts.openSans(textStyle:TextStyle(fontSize: 20,fontWeight:FontWeight.normal))),
+
+            Expanded(child:
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                  label: Text('Apply',style: GoogleFonts.pacifico(textStyle:TextStyle(fontSize: 20,))),
+                  icon: Icon(Icons.favorite),
+                  onPressed: () {
+                    print('Pressed');
+                  },
+                )
+              ],
+            ),
+            ),
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white,
+              offset: const Offset(0.0, 0.0),
+              blurRadius: 0,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

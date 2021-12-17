@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
+
+
 class SearchResultsListView extends StatelessWidget {
   final String? searchTerm;
 
@@ -28,17 +30,8 @@ class SearchResultsListView extends StatelessWidget {
         ),
       );
     }
-    final fsb = FloatingSearchBar.of(context);
 
-      return ListView(
-        padding: EdgeInsets.fromLTRB(10,40,10,10),
-        children: List.generate(
-          5,
-          (index) => ListTile(
-            title: Text('$searchTerm search result'),
-            subtitle: Text(index.toString()),
-          ),
-        ),
-      );
+
+      return Row(children: [],);
   }
 }
