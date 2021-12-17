@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hybrid/Jobhomepage/JobhomePage.dart';
+import 'package:hybrid/Jobhomepage/profilePage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class employeerHomePage extends StatefulWidget {
@@ -26,7 +28,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
             'Assest/images/logoNew.png',
           ),
           actionsIconTheme: IconThemeData(color: Colors.yellow, size: 36),
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.green,
           elevation: (5),
           titleSpacing: 7,
           title: Text(
@@ -37,14 +39,14 @@ class _employeerHomePageState extends State<employeerHomePage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => jobhomePage()));
+                    MaterialPageRoute(builder: (context) => ProfilePage(key: UniqueKey(),)));
               },
               child: Icon(
                 Icons.account_circle,
               ),
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.orange),
+                    MaterialStateProperty.all<Color>(Colors.green),
               ),
             ),
           ],
@@ -97,7 +99,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
                   style: ElevatedButton.styleFrom(
                     elevation: 10,
                     padding: EdgeInsets.all(14),
-                    primary: Colors.orange,
+                    primary: Colors.green,
                     shape: StadiumBorder(),
                   ),
                   child: GradientText(
