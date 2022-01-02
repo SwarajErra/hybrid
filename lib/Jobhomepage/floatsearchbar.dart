@@ -78,7 +78,8 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
-      elevation: 20,
+      shadowColor: Colors.black,
+      elevation: 5,
       automaticallyImplyBackButton: false,
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
@@ -117,7 +118,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Material(
-              color: Colors.white,
+              //color: Colors.white,
               elevation: 4,
               child: Builder(
                 builder: (context) {
