@@ -2,16 +2,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/Employer%20job%20homePage/addingAD.dart';
 import 'package:hybrid/Jobhomepage/floatsearchbar.dart';
+import 'package:intl/intl.dart';
+import '../Employer job homePage/EmployerHomePage.dart';
 
 class searchBar extends StatefulWidget {
-  const searchBar({Key? key}) : super(key: key);
+
+
+
+
+
+
+  searchBar( {
+    required UniqueKey key,
+  }): super(key: key);
+
 
   @override
   _searchBarState createState() => _searchBarState();
 }
 
 class _searchBarState extends State<searchBar> {
+
+
+  final List<addingAdd> addadds = employeerHomePage.addadds;
+
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
@@ -25,6 +41,40 @@ class _searchBarState extends State<searchBar> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+                        Column(
+                          children: addadds.map((tx) {
+                            return Card(
+                              elevation: 15,
+                              child: Container(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(padding: EdgeInsets.all(2)),
+                                    Text('Job Type:- ' + tx.jobType,style: GoogleFonts.breeSerif(
+                                    textStyle: TextStyle(
+                                        fontSize: 20,wordSpacing: 1),),),
+                                    Text('Job Descreption:- '+tx.jobDescrebtion,style: GoogleFonts.breeSerif(
+                                      textStyle: TextStyle(
+                                          fontSize: 20,wordSpacing: 1),),),
+                                    Text('Company Location:- '+tx.companyLocation,style: GoogleFonts.breeSerif(
+                                      textStyle: TextStyle(
+                                          fontSize: 20,wordSpacing: 1),),),
+                                    Text('Company Name:- '+tx.companyName,style: GoogleFonts.breeSerif(
+                                      textStyle: TextStyle(
+                                          fontSize: 20,wordSpacing: 1),),),
+                                    Text('\$${tx.payrate}'.toString(),style: GoogleFonts.breeSerif(
+                                      textStyle: TextStyle(
+                                          fontSize: 20,wordSpacing: 1),)),
+                                    Text(DateFormat('MM-dd-yyy').format(tx.date),style: GoogleFonts.breeSerif(
+                                      textStyle: TextStyle(
+                                          fontSize: 20,wordSpacing: 1),)),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
                         dynamicJobCard(),
                         dynamicJobCard(),
                         dynamicJobCard(),
@@ -53,6 +103,7 @@ class dynamicJobCard extends StatefulWidget {
 }
 
 class _dynamicJobCardState extends State<dynamicJobCard> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
