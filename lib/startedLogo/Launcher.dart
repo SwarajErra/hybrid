@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hybrid/signin/SignIn.dart';
-import './MakeChoice.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/signin/user_model.dart';
 
 class launcher extends StatefulWidget {
   @override
@@ -11,17 +13,35 @@ class launcher extends StatefulWidget {
 }
 
 class _launcherState extends State<launcher> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel? loggedInUser = UserModel();
+
+
+
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Timer(
-        Duration(seconds: 5),
-        () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => signIn(key:UniqueKey()))));
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+    } );
+
+     super.initState();
+      Timer(
+          Duration(seconds: 5),
+              () =>
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          signIn(key: UniqueKey()))));
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +58,7 @@ class _launcherState extends State<launcher> {
                 textStyle:
                     TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
           ),
+
         ],
       ),
     );

@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid/Jobhomepage/Searchbar.dart';
 import './addingAD.dart';
@@ -6,8 +9,13 @@ import 'package:hybrid/Jobhomepage/JobhomePage.dart';
 import 'package:hybrid/Employer%20job%20homePage/profilePage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:intl/intl.dart';
+import './postjob.dart';
+
+
 
 class employeerHomePage extends StatefulWidget {
+
+
   static List<addingAdd> addadds = [
     addingAdd(
         jobType: 'partTime',
@@ -24,6 +32,11 @@ class employeerHomePage extends StatefulWidget {
 }
 
 class _employeerHomePageState extends State<employeerHomePage> {
+  final _formKey = GlobalKey<FormState>();
+  CollectionReference PostJob = FirebaseFirestore.instance.collection(
+      "PostJob");
+
+
   late final Function addTx;
   String jobType = "";
   String companyName = "";
@@ -34,8 +47,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
   final jobtypeController = TextEditingController();
   final companyNameController = TextEditingController();
   final jobDescreptionController = TextEditingController();
-  final companylocationController= TextEditingController();
-  final  payrateController = TextEditingController();
+  final companylocationController = TextEditingController();
+  final payrateController = TextEditingController();
 
   static List<addingAdd> addadds = [
     addingAdd(
@@ -48,8 +61,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
   ];
 
 
-
-  void list1(String txJobType,String txcompanyLocation,String txcompanyName,double txpayrate,String txJobDescription,) {
+  void list1(String txJobType, String txcompanyLocation, String txcompanyName,
+      double txpayrate, String txJobDescription,) {
     final newTx = addingAdd(
       date: DateTime.now(),
       companyLocation: txcompanyLocation,
@@ -63,7 +76,6 @@ class _employeerHomePageState extends State<employeerHomePage> {
       addadds.add(newTx);
     });
   }
-
 
 
   @override
@@ -88,7 +100,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ProfilePage(
+                        builder: (context) =>
+                            ProfilePage(
                               key: UniqueKey(),
                             )));
               },
@@ -101,47 +114,54 @@ class _employeerHomePageState extends State<employeerHomePage> {
             ),
           ],
         ),
-        body: Container(
+        body: Form(
+    key: _formKey,
+    child: Container(
           margin: EdgeInsets.all(12),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextField(
-                  controller: jobtypeController,
-                   // onChanged: (value) {
-                     // jobType = value;
-                   // },
+                TextFormField(
+                    controller: jobtypeController,
+                    validator: (value){
+                      if (value!.isEmpty) {
+                        return ("field must not empty");
+                      }
+                    },
+                    onSaved: (value) {
+                      jobtypeController.text = value!;
+                    },
                     decoration: InputDecoration(labelText: "Job type"),
                     style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
+                    GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
                 TextField(
-                //    onChanged: (value) {
+                  //    onChanged: (value) {
                   //    companyName = value;
-                   // },
-                  controller: companyNameController,
+                  // },
+                    controller: companyNameController,
                     decoration: InputDecoration(labelText: "Company name"),
                     style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
+                    GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
                 TextField(
-               //     onChanged: (value) {
-                 //     companyLocation = value;
-                 //   },
-                  controller: companylocationController,
+                  //     onChanged: (value) {
+                  //     companyLocation = value;
+                  //   },
+                    controller: companylocationController,
                     decoration: InputDecoration(labelText: "Company location"),
                     style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
+                    GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
                 TextField(
-             //     onChanged: (value) {
-               //     payrate = value as double;
-               //   },
+                  //     onChanged: (value) {
+                  //     payrate = value as double;
+                  //   },
                   controller: payrateController,
                   decoration: InputDecoration(labelText: "pay rate"),
                   style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20)),
                 ),
                 TextField(
-             //     onChanged: (value) {
-              //      jobDescrebtion = value;
-              //    },
+                  //     onChanged: (value) {
+                  //      jobDescrebtion = value;
+                  //    },
                   controller: jobDescreptionController,
                   decoration: InputDecoration(labelText: "job description"),
                   style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20)),
@@ -156,7 +176,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
                         ),
                         child: Column(
                           children: [
-                            Text(tx.jobType,style: TextStyle(color: Colors.purple),),
+                            Text(tx.jobType,
+                              style: TextStyle(color: Colors.purple),),
                             Text(tx.jobDescrebtion),
                             Text(tx.companyLocation),
                             Text(tx.companyName),
@@ -173,13 +194,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    list1(
-                      companyNameController.text,
-                      companylocationController.text,
-                      jobDescreptionController.text,
-                      double.parse(payrateController.text),
-                      jobtypeController.text,
-                    );
+                    pushData(jobtypeController.text);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 10,
@@ -203,8 +218,42 @@ class _employeerHomePageState extends State<employeerHomePage> {
               ],
             ),
           ),
+    ),
         ),
       ),
     );
+  }
+
+
+  void pushData(String jobType) async {
+    if (_formKey.currentState!.validate()) {
+      await PostJob
+          .add({"jobType": jobType})
+          .then((value) => {postDetailsToFirestore()});
+      {
+        Fluttertoast.showToast(msg: "Job posted Successful");
+      }
+    }
+  }
+
+
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    postJob userModel = postJob();
+
+
+    userModel.jobType = jobtypeController.text;
+
+
+    await firebaseFirestore
+        .collection("PostJob")
+        .add({"jobType": jobType});
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
+
   }
 }
