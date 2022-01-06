@@ -30,9 +30,9 @@ class _MakeChoiceState extends State<MakeChoice> {
                 "GetJob",
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.normal,
-                )),
+                      fontSize: 40,
+                      fontWeight: FontWeight.normal,
+                    )),
               ),
               SizedBox(height: 60),
               Expanded(
@@ -121,8 +121,8 @@ class _MakeChoiceState extends State<MakeChoice> {
                               'Post jobs',
                               style: GoogleFonts.roboto(
                                   textStyle: TextStyle(
-                                fontSize: 35,
-                              )),
+                                    fontSize: 35,
+                                  )),
                               colors: [
                                 Colors.white,
                                 Colors.white,
