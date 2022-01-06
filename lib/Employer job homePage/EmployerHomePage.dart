@@ -89,8 +89,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ProfilePage(
-                              key: UniqueKey(),
-                            )));
+                          key: UniqueKey(),
+                        )));
               },
               child: Icon(
                 Icons.account_circle,
@@ -107,41 +107,41 @@ class _employeerHomePageState extends State<employeerHomePage> {
             child: Column(
               children: [
                 TextField(
-                  controller: jobtypeController,
-                   // onChanged: (value) {
-                     // jobType = value;
-                   // },
+                    controller: jobtypeController,
+                    // onChanged: (value) {
+                    // jobType = value;
+                    // },
                     decoration: InputDecoration(labelText: "Job type"),
                     style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
+                    GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
                 TextField(
-                //    onChanged: (value) {
+                  //    onChanged: (value) {
                   //    companyName = value;
-                   // },
-                  controller: companyNameController,
+                  // },
+                    controller: companyNameController,
                     decoration: InputDecoration(labelText: "Company name"),
                     style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
+                    GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
                 TextField(
-               //     onChanged: (value) {
-                 //     companyLocation = value;
-                 //   },
-                  controller: companylocationController,
+                  //     onChanged: (value) {
+                  //     companyLocation = value;
+                  //   },
+                    controller: companylocationController,
                     decoration: InputDecoration(labelText: "Company location"),
                     style:
-                        GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
+                    GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20))),
                 TextField(
-             //     onChanged: (value) {
-               //     payrate = value as double;
-               //   },
+                  //     onChanged: (value) {
+                  //     payrate = value as double;
+                  //   },
                   controller: payrateController,
                   decoration: InputDecoration(labelText: "pay rate"),
                   style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20)),
                 ),
                 TextField(
-             //     onChanged: (value) {
-              //      jobDescrebtion = value;
-              //    },
+                  //     onChanged: (value) {
+                  //      jobDescrebtion = value;
+                  //    },
                   controller: jobDescreptionController,
                   decoration: InputDecoration(labelText: "job description"),
                   style: GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20)),

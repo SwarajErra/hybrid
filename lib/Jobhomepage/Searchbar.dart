@@ -52,8 +52,8 @@ class _searchBarState extends State<searchBar> {
                                   children: [
                                     Padding(padding: EdgeInsets.all(2)),
                                     Text('Job Type:- ' + tx.jobType,style: GoogleFonts.breeSerif(
-                                    textStyle: TextStyle(
-                                        fontSize: 20,wordSpacing: 1),),),
+                                      textStyle: TextStyle(
+                                          fontSize: 20,wordSpacing: 1),),),
                                     Text('Job Descreption:- '+tx.jobDescrebtion,style: GoogleFonts.breeSerif(
                                       textStyle: TextStyle(
                                           fontSize: 20,wordSpacing: 1),),),
@@ -146,8 +146,8 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
                       label: Text('Apply',
                           style: GoogleFonts.pacifico(
                               textStyle: TextStyle(
-                            fontSize: 20,
-                          ))),
+                                fontSize: 20,
+                              ))),
                       icon: Icon(Icons.favorite),
                       onPressed: () {
                         print('Pressed');

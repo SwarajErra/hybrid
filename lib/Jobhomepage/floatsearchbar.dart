@@ -81,109 +81,109 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
       shadowColor: Colors.black,
       elevation: 5,
       automaticallyImplyBackButton: false,
-        controller: controller,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm,
-            key: UniqueKey(),
-          ),
+      controller: controller,
+      body: FloatingSearchBarScrollNotifier(
+        child: SearchResultsListView(
+          searchTerm: selectedTerm,
+          key: UniqueKey(),
         ),
-        transition: CircularFloatingSearchBarTransition(),
-        // Bouncing physics for the search history
-        physics: BouncingScrollPhysics(),
-        // Title is displayed on an unopened (inactive) search bar
-        title: Text(
-          selectedTerm,
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        // Hint gets displayed once the search bar is tapped and opened
-        hint: 'Find future jobs...',
-        actions: [
-          //action is ude to clear seacrh bar
-          FloatingSearchBarAction.searchToClear(),
-        ],
-        onQueryChanged: (query) {
-          setState(() {
-            filteredSearchHistory = filterSearchTerms(filter: query);
-          });
-        },
-        onSubmitted: (query) {
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
-          controller.close();
-        },
-        builder: (context, transition) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Material(
-              //color: Colors.white,
-              elevation: 4,
-              child: Builder(
-                builder: (context) {
-                  if (filteredSearchHistory.isEmpty &&
-                      controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Search jobs',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
+      ),
+      transition: CircularFloatingSearchBarTransition(),
+      // Bouncing physics for the search history
+      physics: BouncingScrollPhysics(),
+      // Title is displayed on an unopened (inactive) search bar
+      title: Text(
+        selectedTerm,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+      // Hint gets displayed once the search bar is tapped and opened
+      hint: 'Find future jobs...',
+      actions: [
+        //action is ude to clear seacrh bar
+        FloatingSearchBarAction.searchToClear(),
+      ],
+      onQueryChanged: (query) {
+        setState(() {
+          filteredSearchHistory = filterSearchTerms(filter: query);
+        });
+      },
+      onSubmitted: (query) {
+        setState(() {
+          addSearchTerm(query);
+          selectedTerm = query;
+        });
+        controller.close();
+      },
+      builder: (context, transition) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Material(
+            //color: Colors.white,
+            elevation: 4,
+            child: Builder(
+              builder: (context) {
+                if (filteredSearchHistory.isEmpty &&
+                    controller.query.isEmpty) {
+                  return Container(
+                    height: 56,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Search jobs',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  );
+                } else if (filteredSearchHistory.isEmpty) {
+                  return ListTile(
+                    title: Text(controller.query),
+                    leading: const Icon(Icons.search),
+                    onTap: () {
+                      setState(() {
+                        addSearchTerm(controller.query);
+                        selectedTerm = controller.query;
+                      });
+                      controller.close();
+                    },
+                  );
+                } else {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: filteredSearchHistory
+                        .map(
+                          (term) => ListTile(
+                        title: Text(
+                          term,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        leading: const Icon(Icons.history),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            setState(() {
+                              deleteSearchTerm(term);
+                            });
+                          },
+                        ),
+                        onTap: () {
+                          setState(() {
+                            putSearchTermFirst(term);
+                            selectedTerm = term;
+                          });
+                          controller.close();
+                        },
                       ),
-                    );
-                  } else if (filteredSearchHistory.isEmpty) {
-                    return ListTile(
-                      title: Text(controller.query),
-                      leading: const Icon(Icons.search),
-                      onTap: () {
-                        setState(() {
-                          addSearchTerm(controller.query);
-                          selectedTerm = controller.query;
-                        });
-                        controller.close();
-                      },
-                    );
-                  } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory
-                          .map(
-                            (term) => ListTile(
-                              title: Text(
-                                term,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              leading: const Icon(Icons.history),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
-                                  setState(() {
-                                    deleteSearchTerm(term);
-                                  });
-                                },
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  putSearchTermFirst(term);
-                                  selectedTerm = term;
-                                });
-                                controller.close();
-                              },
-                            ),
-                          )
-                          .toList(),
-                    );
-                  }
-                },
-              ),
+                    )
+                        .toList(),
+                  );
+                }
+              },
             ),
-          );
-        },
+          ),
+        );
+      },
     );
   }
 }

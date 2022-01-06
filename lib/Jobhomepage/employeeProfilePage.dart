@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(MaterialApp(
-      home: EmployeeProfilePage(),
-    ));
+  home: EmployeeProfilePage(),
+));
 
 class EmployeeProfilePage extends StatelessWidget {
   @override
@@ -31,7 +31,7 @@ class EmployeeProfilePage extends StatelessWidget {
                         children: <Widget>[
                           CircleAvatar(
                             backgroundImage:
-                                AssetImage("Assest/1598083178379.png"),
+                            AssetImage("Assest/1598083178379.png"),
                             radius: 80.0,
                           ),
                           SizedBox(
@@ -162,9 +162,9 @@ class EmployeeProfilePage extends StatelessWidget {
                           SizedBox(height: 10),
                           Text(
                             'My name is Tejveer and I am  a \n'
-                            'freelance mobile app developper if you \n'
-                            'need any mobile app for your company \n'
-                            'then contact me for more informations',
+                                'freelance mobile app developper if you \n'
+                                'need any mobile app for your company \n'
+                                'then contact me for more informations',
                             style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                 fontSize: 16.0,
