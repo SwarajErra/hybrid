@@ -10,7 +10,7 @@ class navigationDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-         // createDrawerHeader(),
+          // createDrawerHeader(),
           createDrawerBodyItem(
               icon: Icons.home,text: 'Home'),
           createDrawerBodyItem(
@@ -46,31 +46,31 @@ Widget createDrawerBodyItem(
           padding: EdgeInsets.only(left: 8.0),
           child: GradientText(
             text,
-              style: GoogleFonts.roboto(
-                textStyle: TextStyle(
-                  fontSize: 20,
-                ),
+            style: GoogleFonts.roboto(
+              textStyle: TextStyle(
+                fontSize: 20,
               ),
-              colors: [
-                Colors.red,
-                Colors.pink,
-                Colors.purple,
-                Colors.deepPurple,
-                Colors.deepPurple,
-                Colors.indigo,
-                Colors.blue,
-                Colors.lightBlue,
-                Colors.cyan,
-                Colors.teal,
-                Colors.green,
-                Colors.lightGreen,
-                Colors.lime,
-                Colors.yellow,
-                Colors.amber,
-                Colors.orange,
-                Colors.deepOrange,
-              ],
-        ),
+            ),
+            colors: [
+              Colors.red,
+              Colors.pink,
+              Colors.purple,
+              Colors.deepPurple,
+              Colors.deepPurple,
+              Colors.indigo,
+              Colors.blue,
+              Colors.lightBlue,
+              Colors.cyan,
+              Colors.teal,
+              Colors.green,
+              Colors.lightGreen,
+              Colors.lime,
+              Colors.yellow,
+              Colors.amber,
+              Colors.orange,
+              Colors.deepOrange,
+            ],
+          ),
         ),
       ],
     ),

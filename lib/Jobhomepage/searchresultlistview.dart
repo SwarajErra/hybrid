@@ -32,6 +32,6 @@ class SearchResultsListView extends StatelessWidget {
     }
 
 
-      return Row(children: [],);
+    return Row(children: [],);
   }
 }
