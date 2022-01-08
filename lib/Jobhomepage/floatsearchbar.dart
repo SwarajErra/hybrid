@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hybrid/Jobhomepage/SearchResutPage.dart';
 import 'package:hybrid/Jobhomepage/searchresultlistview.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
@@ -74,10 +76,44 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
     controller.dispose();
     super.dispose();
   }
+  late Map<String, dynamic> userMap;
+
+  bool isLoading = true;
+
+
+
+
+
+
+  void onSearch() async {
+    setState(() {
+      isLoading = true;
+    });
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    await _firestore
+        .collection("PostJob")
+        .where("jobType", isEqualTo: selectedTerm.toLowerCase())
+        .get().
+    then((value) {
+      setState(() {
+      userMap = value.docs[0].data();
+      isLoading = false;
+      });
+      print(userMap);
+
+     Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => searchresultPage(userMap: userMap,key: UniqueKey())));
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     return FloatingSearchBar(
+
       shadowColor: Colors.black,
       elevation: 5,
       automaticallyImplyBackButton: false,
@@ -88,6 +124,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
           key: UniqueKey(),
         ),
       ),
+      automaticallyImplyDrawerHamburger: false,
       transition: CircularFloatingSearchBarTransition(),
       // Bouncing physics for the search history
       physics: BouncingScrollPhysics(),
@@ -111,9 +148,11 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
         setState(() {
           addSearchTerm(query);
           selectedTerm = query;
+          onSearch();
         });
         controller.close();
       },
+
       builder: (context, transition) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -125,6 +164,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
                 if (filteredSearchHistory.isEmpty &&
                     controller.query.isEmpty) {
                   return Container(
+                    
                     height: 56,
                     width: double.infinity,
                     alignment: Alignment.center,
@@ -143,6 +183,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
                       setState(() {
                         addSearchTerm(controller.query);
                         selectedTerm = controller.query;
+
                       });
                       controller.close();
                     },
@@ -158,7 +199,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        leading: const Icon(Icons.history),
+                      //  leading: const Icon(Icons.search),
                         trailing: IconButton(
                           icon: const Icon(Icons.clear),
                           onPressed: () {
@@ -167,10 +208,12 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
                             });
                           },
                         ),
-                        onTap: () {
+                        onTap: () { // This on tap resposible for searching the iteams
                           setState(() {
                             putSearchTermFirst(term);
                             selectedTerm = term;
+                              onSearch();
+
                           });
                           controller.close();
                         },
@@ -186,4 +229,10 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
       },
     );
   }
+
 }
+
+
+
+
+

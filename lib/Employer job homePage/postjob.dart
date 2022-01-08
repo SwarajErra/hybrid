@@ -4,9 +4,9 @@ class postJob {
   postJob({this.jobType});
 
   // receiving data from server
-  factory postJob.fromMap(map) {
+  factory postJob.fromJson(Map<String, dynamic> json){
     return postJob(
-      jobType : map['jobType'],
+      jobType : json['jobType'],
 
     );
   }
@@ -16,5 +16,13 @@ class postJob {
     return {
       'jobType': jobType,
     };
+  }
+  static List<postJob> fromJsonArray(List<dynamic> jsonParts) {
+    List<postJob> parts = [];
+    jsonParts.forEach((jsonData) {
+
+    });
+
+    return parts;
   }
 }
