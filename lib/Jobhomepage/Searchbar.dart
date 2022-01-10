@@ -1,5 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:core';
+
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid/Employer%20job%20homePage/addingAD.dart';
@@ -8,11 +13,6 @@ import 'package:intl/intl.dart';
 import '../Employer job homePage/EmployerHomePage.dart';
 
 class searchBar extends StatefulWidget {
-
-
-
-
-
 
   searchBar( {
     required UniqueKey key,
@@ -25,7 +25,20 @@ class searchBar extends StatefulWidget {
 
 class _searchBarState extends State<searchBar> {
 
+  FirebaseFirestore? _instance;
+  List<Category> _categories = [];
+  List<Category> getCategories(){
+  return _categories;
+}
 
+  Future<void> getCategoriesCollectionFromFirebase() async {
+    _instance = FirebaseFirestore.instance;
+    CollectionReference categories = _instance!.collection('PostJob');
+
+    DocumentSnapshot snapshot = await categories.doc('IsKdGC6hMnPffOAociDU').get();
+    var data = snapshot.data() as Map;
+
+  }
   final List<addingAdd> addadds = employeerHomePage.addadds;
 
   Widget build(BuildContext context) {

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hybrid/Jobhomepage/SearchResutPage.dart';
 import 'package:hybrid/Jobhomepage/searchresultlistview.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
@@ -6,10 +8,12 @@ class FloatSearchBar extends StatefulWidget {
   const FloatSearchBar({Key? key}) : super(key: key);
 
   @override
-  _FloatSearchBarState createState() => _FloatSearchBarState();
+  FloatSearchBarState createState() => FloatSearchBarState();
 }
 
-class _FloatSearchBarState extends State<FloatSearchBar> {
+class FloatSearchBarState extends State<FloatSearchBar>
+    with WidgetsBindingObserver {
+  Map<String, dynamic>? userMap;
   late FloatingSearchBarController controller;
   static const historyLength = 4;
 
@@ -75,6 +79,27 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
     super.dispose();
   }
 
+  bool isLoading = true;
+
+  void onSearch() async {
+    setState(() {
+      isLoading = true;
+    });
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    await _firestore
+        .collection("PostJob")
+        .where("jobType", isEqualTo: selectedTerm)
+        .get()
+        .then((value) {
+      setState(() {
+        userMap = value.docs[0].data();
+        isLoading = false;
+      });
+      print(userMap);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
@@ -88,6 +113,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
           key: UniqueKey(),
         ),
       ),
+      automaticallyImplyDrawerHamburger: false,
       transition: CircularFloatingSearchBarTransition(),
       // Bouncing physics for the search history
       physics: BouncingScrollPhysics(),
@@ -111,9 +137,14 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
         setState(() {
           addSearchTerm(query);
           selectedTerm = query;
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => searchresultPage( selectedTerm: selectedTerm,key: UniqueKey())));
         });
         controller.close();
       },
+
       builder: (context, transition) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -122,8 +153,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
             elevation: 4,
             child: Builder(
               builder: (context) {
-                if (filteredSearchHistory.isEmpty &&
-                    controller.query.isEmpty) {
+                if (filteredSearchHistory.isEmpty && controller.query.isEmpty) {
                   return Container(
                     height: 56,
                     width: double.infinity,
@@ -143,6 +173,7 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
                       setState(() {
                         addSearchTerm(controller.query);
                         selectedTerm = controller.query;
+
                       });
                       controller.close();
                     },
@@ -153,29 +184,34 @@ class _FloatSearchBarState extends State<FloatSearchBar> {
                     children: filteredSearchHistory
                         .map(
                           (term) => ListTile(
-                        title: Text(
-                          term,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        leading: const Icon(Icons.history),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            setState(() {
-                              deleteSearchTerm(term);
-                            });
-                          },
-                        ),
-                        onTap: () {
-                          setState(() {
-                            putSearchTermFirst(term);
-                            selectedTerm = term;
-                          });
-                          controller.close();
-                        },
-                      ),
-                    )
+                            title: Text(
+                              term,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            //  leading: const Icon(Icons.search),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () {
+                                setState(() {
+                                  deleteSearchTerm(term);
+                                });
+                              },
+                            ),
+                            onTap: () {
+                              // This on tap resposible for searching the iteams
+                              setState(() {
+                                putSearchTermFirst(term);
+                                selectedTerm = term;
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => searchresultPage( selectedTerm: selectedTerm,key: UniqueKey())));
+                              });
+                              controller.close();
+                            },
+                          ),
+                        )
                         .toList(),
                   );
                 }

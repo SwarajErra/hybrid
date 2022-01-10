@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid/Employer%20job%20homePage/EmployerHomePage.dart';
@@ -30,111 +32,118 @@ class _MakeChoiceState extends State<MakeChoice> {
                 "GetJob",
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.normal,
-                    )),
+                  fontSize: 40,
+                  fontWeight: FontWeight.normal,
+                )),
               ),
               SizedBox(height: 60),
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        DecoratedBox(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1,
-                              ),
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xff2BE52D),
-                                    Color(0xff73F774),
-                                    Color(0xffC9FC63)
-                                  ],
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight)),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => jobhomePage()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              elevation: 20,
-                              padding: EdgeInsets.all(14),
-                              primary: Colors.transparent,
-                            ),
-                            child: GradientText(
-                              'Job Seeker',
-                              style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                                  fontSize: 35,
-                                ),
-                              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: 80,
+                    margin: EdgeInsets.all(10),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.lightGreen,
+                            width: 0.5,
+                          ),
+                          gradient: LinearGradient(
                               colors: [
-                                Colors.white,
-                                Colors.white,
+                                Color(0xff2BE52D),
+                                Color(0xff73F774),
+                                Color(0xffC9FC63),
+                                Color(0xffDAFC74),
                               ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight)),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => jobhomePage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 20,
+
+                          shadowColor: Colors.green,
+                          padding: EdgeInsets.all(10),
+                          primary: Colors.transparent,
+                        ),
+                        child: GradientText(
+                          'Job Seeker',
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                              fontSize: 35,
                             ),
                           ),
+                          colors: [
+                            Colors.white,
+                            Colors.white,
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(width: 7),
-                    Column(
-                      children: [
-                        DecoratedBox(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1,
-                              ),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0xffC9FC63),
-                                  Color(0xffFBFE03),
-                                  Color(0xffFAFFA0),
-                                ],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                              )),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => employeerHomePage()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                                elevation: 20,
-                                padding: EdgeInsets.all(14),
-                                primary: Colors.transparent),
-                            child: GradientText(
-                              'Post jobs',
-                              style: GoogleFonts.roboto(
-                                  textStyle: TextStyle(
-                                    fontSize: 35,
-                                  )),
-                              colors: [
-                                Colors.white,
-                                Colors.white,
-                              ],
-                            ),
+                  ),
+                  SizedBox(width: 7),
+                  Container(
+                    height: 80,
+                    margin: EdgeInsets.all(10),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.yellow,
+                            width: 1,
                           ),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xffC9FC63),
+                              Color(0xffFBFE03),
+                              Color(0xffFAFFA0),
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          )),
+                      child: ElevatedButton(
+
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => employeerHomePage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+
+                          splashFactory: InkSplash.splashFactory,
+                            elevation: 20,
+                            shadowColor: Colors.yellow,
+                            padding: EdgeInsets.all(10),
+                            primary: Colors.transparent),
+                        child: GradientText(
+                          'Post jobs',
+
+                          style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                            fontSize: 35,
+                          )),
+                          colors: [
+                            Colors.white,
+                            Colors.white,
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+              //  ),
             ],
           ),
         ),

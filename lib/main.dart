@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import './startedLogo/Launcher.dart';
+import 'startedLogo/Launcher.dart';
 
 Future<void> main() async {
 

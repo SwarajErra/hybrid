@@ -34,7 +34,7 @@ class _launcherState extends State<launcher> {
       Timer(
           Duration(seconds: 5),
               () =>
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) =>
