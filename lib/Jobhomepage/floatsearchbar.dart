@@ -11,18 +11,23 @@ class FloatSearchBar extends StatefulWidget {
   FloatSearchBarState createState() => FloatSearchBarState();
 }
 
-class FloatSearchBarState extends State<FloatSearchBar>
-    with WidgetsBindingObserver {
+class FloatSearchBarState extends State<FloatSearchBar>  {
+
+
+
+  int counter = 0;
   Map<String, dynamic>? userMap;
   late FloatingSearchBarController controller;
   static const historyLength = 4;
 
   @override
   void initState() {
-    super.initState();
-    controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
+    if (this.mounted) {
+      super.initState();
+      controller = FloatingSearchBarController();
+      filteredSearchHistory = filterSearchTerms(filter: null);
+    }
+    }
 
 // The currently searched-for term
   String selectedTerm = "";
@@ -72,19 +77,23 @@ class FloatSearchBarState extends State<FloatSearchBar>
     deleteSearchTerm(term);
     addSearchTerm(term);
   }
-
+    /*
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
 
+     */
+
   bool isLoading = true;
 
   void onSearch() async {
-    setState(() {
-      isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = true;
+      });
+    }
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     await _firestore
         .collection("PostJob")
@@ -129,20 +138,27 @@ class FloatSearchBarState extends State<FloatSearchBar>
         FloatingSearchBarAction.searchToClear(),
       ],
       onQueryChanged: (query) {
-        setState(() {
-          filteredSearchHistory = filterSearchTerms(filter: query);
-        });
+        if (mounted) {
+          setState(() {
+            filteredSearchHistory = filterSearchTerms(filter: query);
+          });
+        }
       },
       onSubmitted: (query) {
-        setState(() {
-          addSearchTerm(query);
-          selectedTerm = query;
-          Navigator.pushReplacement(
+        if (mounted) {
+          setState(() {
+            addSearchTerm(query);
+            selectedTerm = query;
+            controller.close();
+            /*  Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => searchresultPage( selectedTerm: selectedTerm,key: UniqueKey())));
-        });
-        controller.close();
+                  builder: (context) => searchresultPage( selectedTerm: selectedTerm,key: UniqueKey())));*/
+          });
+          push();
+        }
+    
+        
       },
 
       builder: (context, transition) {
@@ -170,11 +186,12 @@ class FloatSearchBarState extends State<FloatSearchBar>
                     title: Text(controller.query),
                     leading: const Icon(Icons.search),
                     onTap: () {
-                      setState(() {
-                        addSearchTerm(controller.query);
-                        selectedTerm = controller.query;
-
-                      });
+                      if (mounted) {
+                        setState(() {
+                          addSearchTerm(controller.query);
+                          selectedTerm = controller.query;
+                        });
+                      }
                       controller.close();
                     },
                   );
@@ -193,21 +210,27 @@ class FloatSearchBarState extends State<FloatSearchBar>
                             trailing: IconButton(
                               icon: const Icon(Icons.clear),
                               onPressed: () {
-                                setState(() {
-                                  deleteSearchTerm(term);
-                                });
+                                if (mounted) {
+                                  setState(() {
+                                    deleteSearchTerm(term);
+                                  });
+                                }
                               },
                             ),
                             onTap: () {
-                              // This on tap resposible for searching the iteams
-                              setState(() {
-                                putSearchTermFirst(term);
-                                selectedTerm = term;
-                                Navigator.pushReplacement(
+                              if (mounted) {
+                                // This on tap resposible for searching the iteams
+                                setState(() {
+                                  putSearchTermFirst(term);
+                                  selectedTerm = term;
+                                  /*  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => searchresultPage( selectedTerm: selectedTerm,key: UniqueKey())));
-                              });
+                                        builder: (context) => searchresultPage( selectedTerm: selectedTerm,key: UniqueKey())));*/
+
+                                });
+                               push();
+                              }
                               controller.close();
                             },
                           ),
@@ -221,5 +244,18 @@ class FloatSearchBarState extends State<FloatSearchBar>
         );
       },
     );
+  }
+  void push(){
+    if (mounted) {
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => searchresultPage(selectedTerm: selectedTerm,key: UniqueKey(),)),
+
+      );
+
+    
+
+    }
   }
 }

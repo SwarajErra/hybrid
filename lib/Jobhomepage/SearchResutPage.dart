@@ -14,10 +14,10 @@ class searchresultPage extends StatefulWidget {
   searchresultPage({required this.selectedTerm, Key? key}) : super(key: key);
 
   @override
-  _searchresultPageState createState() => _searchresultPageState();
+  searchresultPageState createState() => searchresultPageState();
 }
 
-class _searchresultPageState extends State<searchresultPage> {
+class searchresultPageState extends State<searchresultPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -27,9 +27,7 @@ class _searchresultPageState extends State<searchresultPage> {
   String? _uid;
 
  void onSearch() async {
-    setState(() {
-      isLoading = true;
-    });
+
     User? user = _auth.currentUser;
     _uid = user?.uid;
 
@@ -40,16 +38,21 @@ class _searchresultPageState extends State<searchresultPage> {
         .where("jobType", isEqualTo: widget.selectedTerm.toLowerCase())
         .get()
         .then((value) {
-      setState(() {
-        userMap = value.docs[0].data();
-        isLoading = true;
-      });
+      if (mounted) {
+        setState(() {
+          userMap = value.docs[0].data();
+          isLoading = true;
+        });
+      }
       print(userMap);
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+
     if(isLoading != true) {
       onSearch();
     }
@@ -91,7 +94,8 @@ class _DynamicCardState extends State<DynamicCard> {
   @override
   Widget build(BuildContext context) {
     print(widget.userMap);
-    return Column(
+    return SingleChildScrollView(child:
+      Column(
         children: <Widget>[
           widget.userMap != null
               ? Card(
@@ -151,11 +155,9 @@ class _DynamicCardState extends State<DynamicCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                         ElevatedButton(onPressed: (){
-
-                          Navigator.pushReplacement(
+                          Navigator.pop(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => MakeChoice()));
+                              MaterialPageRoute(builder: (BuildContext context) => MakeChoice()));
 
                         }, child: Text("<- get Back",
                           style: GoogleFonts.lato(
@@ -197,10 +199,9 @@ class _DynamicCardState extends State<DynamicCard> {
                 fontStyle: FontStyle.italic,),),
                 ElevatedButton(onPressed: (){
 
-                  Navigator.pushReplacement(
+                  Navigator.pop(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => MakeChoice()));
+                      MaterialPageRoute(builder: (BuildContext context) => MakeChoice()));
 
                 }, child: Text("<- get Back",
                   style: GoogleFonts.lato(
@@ -215,6 +216,7 @@ class _DynamicCardState extends State<DynamicCard> {
 
           ),
         ],
+      ),
       );
 
   }
