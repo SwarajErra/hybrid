@@ -57,8 +57,7 @@ class searchresultPageState extends State<searchresultPage> {
       onSearch();
     }
     final size = MediaQuery.of(context).size;
-    return MaterialApp(
-      home: Scaffold(
+    return  Scaffold(
         body: Stack(
           children: <Widget>[
             Positioned.fill(
@@ -76,8 +75,8 @@ class searchresultPageState extends State<searchresultPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
+
   }
 }
 
@@ -157,8 +156,8 @@ class _DynamicCardState extends State<DynamicCard> {
                         ElevatedButton(onPressed: (){
                           Navigator.pop(
                               context,
-                              MaterialPageRoute(builder: (BuildContext context) => MakeChoice()));
-
+                              MaterialPageRoute(builder: (BuildContext context) => jobhomePage()));
+                          (route) => false;
                         }, child: Text("<- get Back",
                           style: GoogleFonts.lato(
                             textStyle: Theme.of(context).textTheme.bodyText2,
@@ -199,9 +198,9 @@ class _DynamicCardState extends State<DynamicCard> {
                 fontStyle: FontStyle.italic,),),
                 ElevatedButton(onPressed: (){
 
-                  Navigator.pop(
+                  Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (BuildContext context) => MakeChoice()));
+                      MaterialPageRoute(builder: (BuildContext context) => jobhomePage()));
 
                 }, child: Text("<- get Back",
                   style: GoogleFonts.lato(

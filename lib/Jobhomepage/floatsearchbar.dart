@@ -250,7 +250,7 @@ class FloatSearchBarState extends State<FloatSearchBar>  {
 
       Navigator.push(
           context,
-          MaterialPageRoute(builder: (BuildContext context) => searchresultPage(selectedTerm: selectedTerm,key: UniqueKey(),)),
+          MaterialPageRoute(builder: (BuildContext context) => searchresultPage(selectedTerm: selectedTerm,key: UniqueKey())),
 
       );
 
