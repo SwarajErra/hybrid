@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/Employer%20job%20homePage/EditJob.dart';
 import 'package:hybrid/Jobhomepage/Searchbar.dart';
 import './addingAD.dart';
 import 'package:hybrid/Jobhomepage/JobhomePage.dart';
@@ -18,7 +19,7 @@ class employeerHomePage extends StatefulWidget {
         companyName: 'Home Depot',
         jobDescrebtion: 'we are the best warehouse in montreal',
         companyLocation: 'montreal',
-        date: DateTime.now(),
+
         payrate: 60.0)
   ];
 
@@ -52,7 +53,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
         companyName: 'Home Depot',
         jobDescrebtion: 'we are the best warehouse in montreal',
         companyLocation: 'montreal',
-        date: DateTime.now(),
+
         payrate: 60.0)
   ];
 
@@ -64,7 +65,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
     String txJobDescription,
   ) {
     final newTx = addingAdd(
-      date: DateTime.now(),
+
       companyLocation: txcompanyLocation,
       payrate: txpayrate,
       jobDescrebtion: txJobDescription,
@@ -225,6 +226,33 @@ class _employeerHomePageState extends State<employeerHomePage> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                      MaterialPageRoute(
+                      builder: (context) => editJob()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      padding: EdgeInsets.all(14),
+                      primary: Colors.green,
+                      shape: StadiumBorder(),
+                    ),
+                    child: GradientText(
+                      'Edit your Job',
+                      style: GoogleFonts.roboto(
+                        textStyle: TextStyle(
+                          fontSize: 35,
+                        ),
+                      ),
+                      colors: [
+                        Colors.white,
+                        Colors.white,
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -250,23 +278,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
     }
   }
 
-  postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
-    postJob userModel = postJob();
-
-    userModel.jobType = jobtypeController.text;
-
-    await firebaseFirestore.collection("PostJob").add({"jobType": jobType,
-      'companyName': companyName,
-      'CompanyLocation': CompanyLocation,
-      'payRate': payRate.toString(),
-      'job Description': jobDescription,
-    });
 
   }
-}
+
