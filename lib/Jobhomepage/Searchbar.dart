@@ -45,7 +45,7 @@ class _searchBarState extends State<searchBar> {
     return Stack(
       children: <Widget>[
         Positioned.fill(
-          top: 70,
+          top: 20,
           child: Align(
             alignment: Alignment.center,
             child: Column(
@@ -63,14 +63,16 @@ class _searchBarState extends State<searchBar> {
             ),
           ),
         ),
-        FloatSearchBar(),
+        // FloatSearchBar(),
       ],
     );
   }
 }
 
 class dynamicJobCard extends StatefulWidget {
-  const dynamicJobCard({Key? key}) : super(key: key);
+  final TextEditingController searchTextFieldController  = TextEditingController()..text = 'general labour';
+
+  // const dynamicJobCard({Key? key}) : super(key: key);
 
   @override
   _dynamicJobCardState createState() => _dynamicJobCardState();
@@ -79,8 +81,16 @@ class dynamicJobCard extends StatefulWidget {
 class _dynamicJobCardState extends State<dynamicJobCard> {
   Map<String, dynamic>? userMap;
   var list = [];
-
-
+   updateList(text){
+     print(text);
+    setState(() {
+      list =  list
+          .where((user) =>
+          user?["CompanyLocation"]?.toLowerCase().contains(text?.toLowerCase())
+      ).toList();
+      print(list);
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -183,11 +193,40 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       width: double.infinity,
       child:   Column(
         children: [
+          TextField(
+            onChanged: (text) {
+              if(widget.searchTextFieldController.text == '') {
+                onSearch();
+              }
+            },
+            controller: widget.searchTextFieldController,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+                hintText: " Search...",
+                border: OutlineInputBorder(),
+                isDense: true,
+                contentPadding: EdgeInsets.all(10),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.search),
+                  color: Colors.grey,
+                  onPressed: () {
+                    if (widget.searchTextFieldController.text != '') {
+                      updateList(widget.searchTextFieldController.text);
+                    }else{
+                      onSearch();
+                    }
+                  }
+                )),
+            style: TextStyle(color: Colors.black, fontSize: 15.0),
+          ),
         for ( var i in list ) dynamicCard(i)
+
     ],
     )
     );
