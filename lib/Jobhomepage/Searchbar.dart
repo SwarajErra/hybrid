@@ -9,6 +9,7 @@ import './SearchResutPage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid/Employer%20job%20homePage/addingAD.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hybrid/Jobhomepage/floatsearchbar.dart';
 import 'package:intl/intl.dart';
 import '../Employer job homePage/EmployerHomePage.dart';
@@ -80,6 +81,7 @@ class dynamicJobCard extends StatefulWidget {
 
 class _dynamicJobCardState extends State<dynamicJobCard> {
   Map<String, dynamic>? userMap;
+  bool pressAttention = false;
   var list = [];
    updateList(text){
      print(text);
@@ -97,7 +99,7 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
           .where((user) =>
           user?["job Description"]?.toLowerCase().contains(text?.toLowerCase())
       ).toList();
-      
+
       tempList4 =  list
           .where((user) =>
           user?["jobType"]?.toLowerCase().contains(text?.toLowerCase())
@@ -190,14 +192,28 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
-                    label: Text('Apply',
+                    label: userMap["pressAttention"] ? Text('Applied',
                         style: GoogleFonts.pacifico(
                             textStyle: TextStyle(
                               fontSize: 20,
-                            ))),
+                            ))) : Text('Apply',
+                        style: GoogleFonts.pacifico(
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                            ))) ,
                     icon: Icon(Icons.favorite),
+                    style: ButtonStyle(
+                      backgroundColor: userMap["pressAttention"]  ?  MaterialStateProperty.all(Colors.lightGreenAccent) : MaterialStateProperty.all(Colors.lightBlue) ,
+                    ),
                     onPressed: () {
-                      print('Pressed');
+                      setState(() => userMap["pressAttention"]  = !userMap["pressAttention"] );
+                      if(userMap["pressAttention"]) {
+                        Fluttertoast.showToast(
+                          msg: "Job Applied",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                        );
+                      }
                       onSearch();
                     },
                   )

@@ -22,6 +22,7 @@ class postJob {
       'payRate': payRate.toString(),
       'CompanyLocation': CompanyLocation,
       'job Description': jobDescription,
+      'pressAttention' : false
 
     };
   }
