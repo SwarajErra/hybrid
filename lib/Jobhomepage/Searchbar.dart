@@ -202,6 +202,7 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
           TextField(
             onChanged: (text) {
               if(widget.searchTextFieldController.text == '') {
+                list = [];
                 onSearch();
               }
             },
