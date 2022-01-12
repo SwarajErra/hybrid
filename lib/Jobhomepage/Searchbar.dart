@@ -84,10 +84,30 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
    updateList(text){
      print(text);
     setState(() {
-      list =  list
+      var tempList1 = [],tempList2 = [],tempList3 = [],tempList4 = [],tempList5 = [];
+      tempList1 =  list
           .where((user) =>
           user?["CompanyLocation"]?.toLowerCase().contains(text?.toLowerCase())
       ).toList();
+      tempList2 =  list
+          .where((user) =>
+          user?["companyName"]?.toLowerCase().contains(text?.toLowerCase())
+      ).toList();
+      tempList3 =  list
+          .where((user) =>
+          user?["job Description"]?.toLowerCase().contains(text?.toLowerCase())
+      ).toList();
+      
+      tempList4 =  list
+          .where((user) =>
+          user?["jobType"]?.toLowerCase().contains(text?.toLowerCase())
+      ).toList();
+      tempList5 =  list
+          .where((user) =>
+          user?["payRate"]?.toLowerCase().contains(text?.toLowerCase())
+      ).toList();
+
+    list = tempList1 +tempList2+tempList3+tempList4+tempList5;
       print(list);
     });
   }
