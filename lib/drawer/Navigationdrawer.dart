@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid/Employer%20job%20homePage/notifications.dart';
 import 'package:hybrid/Jobhomepage/employeeProfilePage.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 class navigationDrawer extends StatelessWidget {
@@ -22,7 +23,10 @@ class navigationDrawer extends StatelessWidget {
           createDrawerBodyItem(
               icon: Icons.event_note,text: 'Events'),
           Divider(),
-          createDrawerBodyItem(
+          createDrawerBodyItem(onTap: ((){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => Notifications()));
+          }),
               icon: Icons.notifications_active,text: 'Notifications'),
           createDrawerBodyItem(
               icon: Icons.contact_phone,text: 'Contact Info'),
