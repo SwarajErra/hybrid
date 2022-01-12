@@ -80,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                             height: 20,
                           ),
                           Text(
-                            "Create an  Free Account",
+                            "Create a  Free Account",
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey[700],
@@ -155,6 +155,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             TextFormField(
                               decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.vpn_key),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 10),
                                 enabledBorder: OutlineInputBorder(
@@ -201,6 +202,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             TextFormField(
                               decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.vpn_key),
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 10),
                                 enabledBorder: OutlineInputBorder(
@@ -254,13 +256,10 @@ class _SignUpState extends State<SignUp> {
                             },
                             color: Colors.green,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40)),
+                                borderRadius: BorderRadius.circular(38)),
                             child: Text(
                               "Sign Up",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
+                              style: TextStyle(color: Colors.white, fontSize: 25),
                             ),
                           ),
                         ),

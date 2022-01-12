@@ -19,7 +19,7 @@ class EmployeeProfilePage extends StatelessWidget {
                       gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomLeft,
-                          colors: [Colors.redAccent, Colors.pinkAccent])),
+                          colors: [Colors.white, Colors.white])),
                   child: Container(
                     padding: EdgeInsets.fromLTRB(1, 40, 1, 1),
                     width: double.infinity,

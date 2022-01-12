@@ -1,223 +1,114 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hybrid/forms/employeeForm.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({required UniqueKey key,}) : super(key: key);
+
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
+
 }
 
+
 class _ProfilePageState extends State<ProfilePage> {
-  @override
+  FirebaseFirestore? _instance;
+  List<Category> _categories = [];
+
+  List<Category> getCategories() {
+    return _categories;
+  }
+  Future<void> getCategoriesCollectionFromFirebase() async {
+    _instance = FirebaseFirestore.instance;
+    CollectionReference categories = _instance!.collection('profiledata');
+
+    DocumentSnapshot snapshot =
+    await categories.doc('1p8Plcux61dRMoVcQPgm').get();
+    var data = snapshot.data() as Map;
+  }
+ // List<profileAd> get profileadds => ProfilePage.profileadds;
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.green, Colors.lightGreen]),
-                color: Colors.green,
-              ),
-              child: Container(
-                width: double.infinity,
-                height: 350.0,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(
-                          "Assest/images/avatar.png",
-                        ),
-                        radius: 50.0,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        "Sravan",
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Card(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 5.0),
-                        clipBehavior: Clip.antiAlias,
-                        color: Colors.white,
-                        elevation: 5.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 22.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Job Posts",
-                                      style: TextStyle(
-
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "10",
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Followers",
-                                      style: TextStyle(
-
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "21.2K",
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      " Following",
-                                      style: TextStyle(
-
-                                        fontSize: 22.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "300",
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )),
-          Container(
-            child: Padding(
-              padding:
-              const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "About:",
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 28.0),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(children: [
-                    Text(
-                      "Company Name:",
-                      style: TextStyle(
-                          fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,
-                          fontSize: 22.0),
-                    ),
-                    Text(
-                      "  Alpha developer",
-                      style: TextStyle(
-                          fontStyle: FontStyle.normal,fontWeight: FontWeight.bold,
-                          fontSize: 22.0),
-                    ),
-                  ],),
-                  Text(
-                    'We are the leading company of montreal and we  beleieve in hard working employees and always looking for fresh talent ',
-                    style: TextStyle(
-                      fontSize: 22.0,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black,
-                      letterSpacing: 2.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          Text(
+            "User Profile",style: TextStyle(
+              fontSize: 40.0,
+              color:Colors.blueGrey,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w400
+          ),
+          ),
+          Text(
+            "first_name",style: TextStyle(
+              fontSize: 25.0,
+              color:Colors.blueGrey,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w400
+          ),
+          ),
+          SizedBox(width: 4),
+          Text(
+            "last_name"
+            ,style: TextStyle(
+              fontSize: 25.0,
+              color:Colors.blueGrey,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w400
+          ),
           ),
           SizedBox(
-            height: 20.0,
+            height: 10,
           ),
-          Container(
-            width: 300.00,
-            child: RaisedButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                elevation: 0.0,
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                        colors: [Colors.green, Colors.lightGreen]),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Container(
-                    constraints:
-                    BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Contact us",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26.0,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                )),
+          Text(
+            "Address"
+            ,style: TextStyle(
+              fontSize: 18.0,
+              color:Colors.black45,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w300
+          ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "education"
+            ,style: TextStyle(
+              fontSize: 15.0,
+              color:Colors.black45,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w300
+          ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "experience"
+            ,style: TextStyle(
+              fontSize: 15.0,
+              color:Colors.black45,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w300
+          ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            "mobile no || email"
+            ,style: TextStyle(
+              fontSize: 18.0,
+              color:Colors.black45,
+              letterSpacing: 2.0,
+              fontWeight: FontWeight.w300
+          ),
           ),
         ],
       ),

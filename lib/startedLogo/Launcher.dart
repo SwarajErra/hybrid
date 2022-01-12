@@ -51,7 +51,7 @@ class _launcherState extends State<launcher> {
       width: 400,
       child: Column(
         children: [
-          Image.asset("Assest/images/logo.png", width: 200, height: 300),
+          Image.asset("Assest/images/logoNew.png", width: 200, height: 300),
           Text(
             "GetJob",
             style: GoogleFonts.roboto(

@@ -79,7 +79,7 @@ class _MakeChoiceState extends State<MakeChoice> {
                           'Job Seeker',
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
-                              fontSize: 35,
+                              fontSize: 30,
                             ),
                           ),
                           colors: [
@@ -131,7 +131,7 @@ class _MakeChoiceState extends State<MakeChoice> {
 
                           style: GoogleFonts.roboto(
                               textStyle: TextStyle(
-                            fontSize: 35,
+                            fontSize: 30,
                           )),
                           colors: [
                             Colors.white,
