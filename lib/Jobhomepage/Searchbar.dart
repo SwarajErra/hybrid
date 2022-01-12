@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hybrid/Employer%20job%20homePage/report.dart';
 import './SearchResutPage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -216,7 +217,13 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
                       }
                       onSearch();
                     },
-                  )
+                  ),
+
+    Container(
+    alignment: Alignment.topRight,
+    child: Report(),
+    margin: EdgeInsets.fromLTRB(40,0, 0, 0),
+    )
                 ],
               ),
             ),
