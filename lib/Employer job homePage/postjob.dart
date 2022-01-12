@@ -22,8 +22,8 @@ class postJob {
       'payRate': payRate.toString(),
       'CompanyLocation': CompanyLocation,
       'job Description': jobDescription,
-      'pressAttention' : false
-
+      'pressAttention' : false,
+      'reportJob' : false
     };
   }
   static List<postJob> fromJsonArray(List<dynamic> jsonParts) {
