@@ -164,6 +164,19 @@ class _editJobState extends State<editJob> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Image.asset(
+          'Assest/images/logoNew.png',
+        ),
+        actionsIconTheme: IconThemeData(color: Colors.yellow, size: 36),
+        backgroundColor: Color(0xff5ECC1A),
+        elevation: (5),
+        titleSpacing: 7,
+        title: Text(
+          "Getjob",
+          style: GoogleFonts.roboto(fontSize: 25, color: Colors.white),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
             margin: EdgeInsets.fromLTRB(10, 70, 10, 10),
@@ -238,6 +251,19 @@ class _pushNewJobState extends State<pushNewJob> {
     print(widget.userMap);
 
     return Scaffold(
+      appBar: AppBar(
+        leading: Image.asset(
+          'Assest/images/logoNew.png',
+        ),
+        actionsIconTheme: IconThemeData(color: Colors.yellow, size: 36),
+        backgroundColor: Color(0xff5ECC1A),
+        elevation: (5),
+        titleSpacing: 7,
+        title: Text(
+          "Getjob",
+          style: GoogleFonts.roboto(fontSize: 25, color: Colors.white),
+        ),
+      ),
       body: Form(
         key: _formKey,
         child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
