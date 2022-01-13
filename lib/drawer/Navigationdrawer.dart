@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid/Employer%20job%20homePage/notifications.dart';
+import 'package:hybrid/Employer%20job%20homePage/profilePage.dart';
 import 'package:hybrid/Jobhomepage/employeeProfilePage.dart';
 import 'package:hybrid/forms/employeeForm.dart';
 import 'package:hybrid/signin/SignIn.dart';
@@ -17,7 +18,10 @@ class navigationDrawer extends StatelessWidget {
           createDrawerBodyItem(
               icon: Icons.home,text: 'menu'),
           createDrawerBodyItem(
-              icon: Icons.home,text: 'profie'),
+              icon: Icons.home,text: 'profie',onTap: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfilePage()));
+          }),
           createDrawerBodyItem(
               icon: Icons.account_circle,text: 'update resume',onTap: (){
             Navigator.push(context,

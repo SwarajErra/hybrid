@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hybrid/forms/employeeForm.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({required UniqueKey key,}) : super(key: key);
+  ProfilePage({  key,}) : super(key: key);
 
 
   @override
@@ -36,82 +36,67 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body: Column(
         children: [
-          Text(
-            "User Profile",style: TextStyle(
-              fontSize: 40.0,
-              color:Colors.blueGrey,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w400
-          ),
-          ),
-          Text(
-            "first_name",style: TextStyle(
-              fontSize: 25.0,
-              color:Colors.blueGrey,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w400
-          ),
-          ),
-          SizedBox(width: 4),
-          Text(
-            "last_name"
-            ,style: TextStyle(
-              fontSize: 25.0,
-              color:Colors.blueGrey,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w400
-          ),
-          ),
+          Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.bottomCenter,
+              children: [
+                Image(
+                  height: 275,
+                  fit: BoxFit.cover,
+                  image: const NetworkImage(
+                      'https://images.unsplash.com/photo-1485160497022-3e09382fb310?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG1vdW50YWluc3xlbnwwfHwwfHw%3D&w=1000&q=80'),
+                ),
+                Positioned(
+                    bottom: -50.0,
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.black,
+                      child: CircleAvatar(
+                        radius: 75,
+                        backgroundImage: NetworkImage(
+                            ''),
+                      ),
+                    ))
+              ]),
           SizedBox(
-            height: 10,
+            height: 35,
           ),
-          Text(
-            "Address"
-            ,style: TextStyle(
-              fontSize: 18.0,
-              color:Colors.black45,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w300
+          ListTile(
+            title: Center(child: Text('Krinesh')),
+            subtitle: Center(child: Text('Patel')),
           ),
+          ListTile(
+            title: Text('Education'),
+            subtitle: Text(
+                'Bachlor Degree in Electronic and communication'),
           ),
-          SizedBox(
-            height: 10,
+
+          ListTile(
+            title: Text('Experience'),
+            subtitle: Text(
+                '1 year as jouiner developer'),
           ),
-          Text(
-            "education"
-            ,style: TextStyle(
-              fontSize: 15.0,
-              color:Colors.black45,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w300
+
+      ListTile(
+        title: Text('Contact Information'),
+      ),
+
+          ListTile(
+            title: Text('Mobile No'),
+            subtitle: Text('+1469955564'),
           ),
+
+          ListTile(
+            title: Text('Email Id'),
+            subtitle: Text('krineshpatel6123@gmail.com'),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "experience"
-            ,style: TextStyle(
-              fontSize: 15.0,
-              color:Colors.black45,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w300
-          ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            "mobile no || email"
-            ,style: TextStyle(
-              fontSize: 18.0,
-              color:Colors.black45,
-              letterSpacing: 2.0,
-              fontWeight: FontWeight.w300
-          ),
+          ListTile(
+            title: Text('Address'),
+            subtitle: Text('5550 ave trent, montreal'),
           ),
         ],
       ),
     );
+
   }
 }
