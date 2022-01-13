@@ -20,7 +20,7 @@ class navigationDrawer extends StatelessWidget {
           createDrawerBodyItem(
               icon: Icons.home,text: 'profie',onTap: (){
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilePage()));
+                MaterialPageRoute(builder: (context) => EmployeeProfilePage()));
           }),
           createDrawerBodyItem(
               icon: Icons.account_circle,text: 'update resume',onTap: (){
@@ -30,7 +30,7 @@ class navigationDrawer extends StatelessWidget {
 
           createDrawerBodyItem(
               icon: Icons.event_note,text: 'Events'),
-          Divider(),
+
           createDrawerBodyItem(onTap: ((){
             Navigator.push(context,
                 MaterialPageRoute(builder: (_) => Notifications()));
@@ -38,6 +38,11 @@ class navigationDrawer extends StatelessWidget {
               icon: Icons.notifications_active,text: 'Notifications'),
           createDrawerBodyItem(
               icon: Icons.contact_phone,text: 'Contact Info'),
+          Divider(
+            indent: 10,
+            color: Colors.green,
+            thickness: 2,
+          ),
          createDrawerBodyItem(
           icon: Icons.add_to_home_screen,text: 'sign out', onTap: () {
            Navigator.push(context,
