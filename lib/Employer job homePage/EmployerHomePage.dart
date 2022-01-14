@@ -269,6 +269,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
         'CompanyLocation': CompanyLocation,
         'payRate': payRate.toString(),
         'job Description': jobDescription,
+        'pressAttention' : false,
+        'reportJob' : false
       }).then((value) => {});
       {
         Fluttertoast.showToast(msg: "Job posted Successful");

@@ -269,7 +269,8 @@ class _pushNewJobState extends State<pushNewJob> {
         'CompanyLocation': CompanyLocation,
         'payRate': payRate.toString(),
         'job Description': jobDescription,
-
+        'pressAttention' : false,
+        'reportJob' : false
       })
           .then((value) => Fluttertoast.showToast(msg: "Job has been Updated"))
           .catchError((error) => print("Failed to update user: $error"));

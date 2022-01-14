@@ -193,7 +193,7 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
-                    label: userMap["pressAttention"] ? Text('Applied',
+                    label: userMap!["pressAttention"] ? Text('Applied',
                         style: GoogleFonts.pacifico(
                             textStyle: TextStyle(
                               fontSize: 20,
@@ -204,11 +204,11 @@ class _dynamicJobCardState extends State<dynamicJobCard> {
                             ))) ,
                     icon: Icon(Icons.favorite),
                     style: ButtonStyle(
-                      backgroundColor: userMap["pressAttention"]  ?  MaterialStateProperty.all(Colors.lightGreenAccent) : MaterialStateProperty.all(Colors.lightBlue) ,
+                      backgroundColor: userMap!["pressAttention"]  ?  MaterialStateProperty.all(Colors.lightGreenAccent) : MaterialStateProperty.all(Colors.lightBlue) ,
                     ),
                     onPressed: () {
-                      setState(() => userMap["pressAttention"]  = !userMap["pressAttention"] );
-                      if(userMap["pressAttention"]) {
+                      setState(() => userMap!["pressAttention"]  = !userMap!["pressAttention"] );
+                      if(userMap!["pressAttention"]) {
                         Fluttertoast.showToast(
                           msg: "Job Applied",
                           toastLength: Toast.LENGTH_SHORT,
