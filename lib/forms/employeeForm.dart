@@ -158,7 +158,8 @@ class ResumeFormState extends State<ResumeForm> {
         //margin: EdgeInsets.all(1),
         child: Form(
           key: _formKey,
-          child: Column(
+          child:SingleChildScrollView(child:
+         Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _buildFirstNameField(),
@@ -168,7 +169,7 @@ class ResumeFormState extends State<ResumeForm> {
               _buildEmailField(),
               _buildEducationField(),
               _buildExperienceField(),
-              SizedBox(height: 150,),
+              SizedBox(height: 80,),
               ElevatedButton(onPressed: ()  {
                 pushData(first_nameController.text,last_nameController.text,addressController.text,mobileController.hashCode,
                 emailController.text,educationController.text,experienceController.text);
@@ -178,10 +179,11 @@ class ResumeFormState extends State<ResumeForm> {
                 _formKey.currentState!.save();
               },
                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green),
-
+                  padding: MaterialStateProperty.all(EdgeInsets.all(20)),
                 ),
                 child:Text('Submit'),)
             ],
+         ),
           ),
         ),
       ),
@@ -193,7 +195,6 @@ class ResumeFormState extends State<ResumeForm> {
         'last_name': last_name,
         'address': address,
         'mobile': mobile,
-
         'email': email,
         'education': education,
         'experience': experience
