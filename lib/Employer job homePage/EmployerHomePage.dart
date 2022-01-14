@@ -71,6 +71,7 @@ class _employeerHomePageState extends State<employeerHomePage> {
       jobDescrebtion: txJobDescription,
       companyName: txcompanyName,
       jobType: txJobType,
+
     );
 
     setState(() {
@@ -268,7 +269,8 @@ class _employeerHomePageState extends State<employeerHomePage> {
         'companyName': companyName,
         'CompanyLocation': CompanyLocation,
         'payRate': payRate.toString(),
-
+        'pressAttention' : false,
+        'reportJob' : false,
         'job Description': jobDescription,
       })
           .then((value) => {});

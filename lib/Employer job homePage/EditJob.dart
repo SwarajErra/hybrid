@@ -228,6 +228,8 @@ Future<void> updateUser(
         'CompanyLocation': CompanyLocation,
         'payRate': payRate.toString(),
         'job Description': jobDescription,
+    'pressAttention' : false,
+    'reportJob' : false
       })
       .then((value) => print("User Updated"))
       .catchError((error) => print("Failed to update user: $error"));
