@@ -27,17 +27,12 @@ class navigationDrawer extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ResumeForm()));
           }),
-
-          createDrawerBodyItem(
-              icon: Icons.event_note,text: 'Events'),
-
           createDrawerBodyItem(onTap: ((){
             Navigator.push(context,
                 MaterialPageRoute(builder: (_) => Notifications()));
           }),
               icon: Icons.notifications_active,text: 'Notifications'),
-          createDrawerBodyItem(
-              icon: Icons.contact_phone,text: 'Contact Info'),
+
           Divider(
             indent: 10,
             color: Colors.green,

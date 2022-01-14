@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,9 +7,41 @@ void main() => runApp(MaterialApp(
       home: EmployeeProfilePage(),
     ));
 
-class EmployeeProfilePage extends StatelessWidget {
+class EmployeeProfilePage extends StatefulWidget {
+
+  @override
+  _EmployeeProfilePageState createState() => _EmployeeProfilePageState();
+}
+
+  class _EmployeeProfilePageState extends State<EmployeeProfilePage> {
+    @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+      onSearch();
+    }
+
+  @override
+  Map<String, dynamic>? userMap;
+  var list = [];
+  CollectionReference PostJob =
+      FirebaseFirestore.instance.collection("profiledata");
+  void onSearch() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    await _firestore.collection('profiledata').get().then((value) {
+      if (mounted) {
+        setState(() {
+          userMap = value.docs[0].data();
+          for (var i = 0; i < value.docs.length; i++) {
+            list.add(value.docs[i].data());
+          }
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    print(userMap);
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -41,7 +74,7 @@ class EmployeeProfilePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                'First Name:- ',
+                                'First Name:- ' + userMap?["first_name"],
                                 style: GoogleFonts.lato(
                                   textStyle:
                                       Theme.of(context).textTheme.subtitle1,
@@ -51,7 +84,7 @@ class EmployeeProfilePage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Last Name:- ',
+                                'Last Name:- ' + userMap?["last_name"],
                                 style: GoogleFonts.lato(
                                   textStyle:
                                       Theme.of(context).textTheme.subtitle1,
@@ -65,58 +98,56 @@ class EmployeeProfilePage extends StatelessWidget {
                           SizedBox(
                             height: 15.0,
                           ),
-                          Column(children: [
-                           Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 22.0),
-                            child:  Text(
-                                'Education:- '+ '---------------------------------------------------------------------------'
-                                    '-------------------------------------------------------------------------------------',
-                                style: GoogleFonts.lato(
-                                  textStyle:
-                                  Theme.of(context).textTheme.subtitle1,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FontStyle.italic,
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 22.0),
+                                child: Text(
+                                  'Education:- ' + userMap?['education'],
+                                  style: GoogleFonts.lato(
+                                    textStyle:
+                                        Theme.of(context).textTheme.subtitle1,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 5.0),
-                              child:  Text(
-                                'Experience:- '+ '---------------------------------------------------------------------------'
-                                    '-------------------------------------------------------------------------------------',
-                                style: GoogleFonts.lato(
-                                  textStyle:
-                                  Theme.of(context).textTheme.subtitle1,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FontStyle.italic,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 5.0),
+                                child: Text(
+                                  'Experience:- ' + userMap?['experience'],
+                                  style: GoogleFonts.lato(
+                                    textStyle:
+                                        Theme.of(context).textTheme.subtitle1,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15.0, vertical: 5.0),
-                              child:  Text(
-                                'Adress:- '+ '---------------------------------------------------------------------------',
-                                style: GoogleFonts.lato(
-                                  textStyle:
-                                  Theme.of(context).textTheme.subtitle1,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FontStyle.italic,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 15.0),
+                                child: Text(
+                                  'Adress:- ' + userMap?['address'],
+                                  style: GoogleFonts.lato(
+                                    textStyle:
+                                        Theme.of(context).textTheme.subtitle1,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                 ),
                               ),
-                            ),
                             ],
                           ),
                         ],
                       ),
                     ),
                   )),
-
               Positioned(
                 bottom: 30,
                 left: 50,
@@ -160,4 +191,6 @@ class EmployeeProfilePage extends StatelessWidget {
       ),
     );
   }
+
+
 }

@@ -19,7 +19,6 @@ class employeerHomePage extends StatefulWidget {
         companyName: 'Home Depot',
         jobDescrebtion: 'we are the best warehouse in montreal',
         companyLocation: 'montreal',
-
         payrate: 60.0)
   ];
 
@@ -53,7 +52,6 @@ class _employeerHomePageState extends State<employeerHomePage> {
         companyName: 'Home Depot',
         jobDescrebtion: 'we are the best warehouse in montreal',
         companyLocation: 'montreal',
-
         payrate: 60.0)
   ];
 
@@ -65,7 +63,6 @@ class _employeerHomePageState extends State<employeerHomePage> {
     String txJobDescription,
   ) {
     final newTx = addingAdd(
-
       companyLocation: txcompanyLocation,
       payrate: txpayrate,
       jobDescrebtion: txJobDescription,
@@ -139,13 +136,12 @@ class _employeerHomePageState extends State<employeerHomePage> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return ("field must not empty");
-                        }
-                        else {
+                        } else {
                           onSaved:
-                              (value) {
+                          (value) {
                             companyNameController.text = value!;
                           };
-                      }
+                        }
                       },
                       style: GoogleFonts.roboto(
                           textStyle: TextStyle(fontSize: 20))),
@@ -154,14 +150,13 @@ class _employeerHomePageState extends State<employeerHomePage> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return ("field must not empty");
-                        }
-                        else {
+                        } else {
                           onSaved:
-                              (value) {
+                          (value) {
                             companylocationController.text = value!;
                           };
                         }
-                        },
+                      },
                       decoration:
                           InputDecoration(labelText: "Company location"),
                       style: GoogleFonts.roboto(
@@ -171,13 +166,12 @@ class _employeerHomePageState extends State<employeerHomePage> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return ("field must not empty");
-                      }
-                      else {
+                      } else {
                         onSaved:
-                            (value) {
+                        (value) {
                           companylocationController.text = value!;
                         };
-                    }
+                      }
                     },
                     decoration: InputDecoration(labelText: "pay rate"),
                     style:
@@ -188,70 +182,74 @@ class _employeerHomePageState extends State<employeerHomePage> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return ("field must be filled");
-                      }
-                      else{
-                        onSaved: (value) {
+                      } else {
+                        onSaved:
+                        (value) {
                           jobDescreptionController.text = value!;
                         };
                       }
                     },
-
                     decoration: InputDecoration(labelText: "job description"),
                     style:
                         GoogleFonts.roboto(textStyle: TextStyle(fontSize: 20)),
                   ),
                   SizedBox(
-                    height: 40,
+                    height: 30,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      pushData(jobtypeController.text,companyNameController.text,companylocationController.text,payrateController.text.toString(),jobDescreptionController.text);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 10,
-                      padding: EdgeInsets.all(14),
-                      primary: Colors.green,
-                      shape: StadiumBorder(),
-                    ),
-                    child: GradientText(
-                      'Post a job',
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          fontSize: 35,
-                        ),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        pushData(
+                            jobtypeController.text,
+                            companyNameController.text,
+                            companylocationController.text,
+                            payrateController.text.toString(),
+                            jobDescreptionController.text);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 10,
+                        padding: EdgeInsets.all(14),
+                        primary: Colors.green,
+                        shape: StadiumBorder(),
+                        shadowColor: Colors.yellow,
                       ),
-                      colors: [
-                        Colors.white,
-                        Colors.white,
-                      ],
-                    ),
-                  ),
+                      icon: Icon(Icons.post_add),
+                      label: Text(
+                        "Post a Job",
+                        style: GoogleFonts.lato(
+                          textStyle: Theme.of(context).textTheme.headline6,
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+
+                        ),
+                      )),
                   SizedBox(height: 20),
-                  ElevatedButton(
+                  ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(context,
-                      MaterialPageRoute(
-                      builder: (context) => editJob()),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => editJob()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
+                      shadowColor: Colors.yellow,
                       elevation: 10,
                       padding: EdgeInsets.all(14),
                       primary: Colors.green,
                       shape: StadiumBorder(),
                     ),
-                    child: GradientText(
-                      'Edit your Job',
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          fontSize: 35,
+                      icon: Icon(Icons.edit),
+                      label: Text(
+                        "Edit Job",
+                        style: GoogleFonts.lato(
+                          textStyle: Theme.of(context).textTheme.headline6,
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
                         ),
-                      ),
-                      colors: [
-                        Colors.white,
-                        Colors.white,
-                      ],
-                    ),
+                      )
                   ),
                 ],
               ),
@@ -262,23 +260,27 @@ class _employeerHomePageState extends State<employeerHomePage> {
     );
   }
 
-  void pushData(String jobType,String companyName,String CompanyLocation,String payRate,String jobDescription) async {
+  void pushData(String jobType, String companyName, String CompanyLocation,
+      String payRate, String jobDescription) async {
     if (_formKey.currentState!.validate()) {
-      await PostJob.add({"jobType": jobType,
+      await PostJob.add({
+        "jobType": jobType,
         'companyName': companyName,
         'CompanyLocation': CompanyLocation,
         'payRate': payRate.toString(),
-
         'job Description': jobDescription,
-      })
-          .then((value) => {});
+      }).then((value) => {});
       {
         Fluttertoast.showToast(msg: "Job posted Successful");
       }
+      clearText();
     }
   }
-
-
-
+  clearText() {
+    companyNameController.clear();
+    companylocationController.clear();
+    payrateController.clear();
+    jobDescreptionController.clear();
+    jobtypeController.clear();
   }
-
+}

@@ -1,3 +1,7 @@
+
+
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +41,21 @@ class _editJobState extends State<editJob> {
           }
         });
       }
-      print(list);
-      print(userMap);
+    });
+  }
+
+  deleteUser() async {
+   await FirebaseFirestore.instance
+        .collection("PostJob")
+        .where("jobType", isEqualTo : userMap!["jobType"])
+        .get().then((value){
+      value.docs.forEach((element) {
+        FirebaseFirestore.instance.collection("PostJob").doc(element.id).delete().then((value){
+          {
+            Fluttertoast.showToast(msg: "Job deleted refresh the page");
+          }
+        });
+      });
     });
   }
 
@@ -145,11 +162,7 @@ class _editJobState extends State<editJob> {
                       color: Colors.red,
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  pushNewJob(userMap: userMap)));
+                                  deleteUser();
                     },
                   ),
                 ],
@@ -159,6 +172,7 @@ class _editJobState extends State<editJob> {
         ),
       ),
     );
+
   }
 
   @override
@@ -171,6 +185,7 @@ class _editJobState extends State<editJob> {
         actionsIconTheme: IconThemeData(color: Colors.yellow, size: 36),
         backgroundColor: Color(0xff5ECC1A),
         elevation: (5),
+        shadowColor: Colors.blue,
         titleSpacing: 7,
         title: Text(
           "Getjob",
@@ -179,7 +194,7 @@ class _editJobState extends State<editJob> {
       ),
       body: SingleChildScrollView(
         child: Container(
-            margin: EdgeInsets.fromLTRB(10, 70, 10, 10),
+            margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
             width: double.infinity,
             child: Column(
               children: [for (var i in list) dynamicCard(i)],
@@ -198,7 +213,7 @@ class pushNewJob extends StatefulWidget {
   _pushNewJobState createState() => _pushNewJobState();
 }
 
-CollectionReference postJob = FirebaseFirestore.instance.collection('PostJob');
+
 
 final jobtypeController = TextEditingController();
 final companyNameController = TextEditingController();
@@ -213,43 +228,65 @@ String? jobDescreption;
 double? payRate;
 final _formKey = GlobalKey<FormState>();
 
-Future<void> updateUser(
-  String jobType,
-  String companyName,
-  String CompanyLocation,
-  String payRate,
-  String jobDescription,
-) {
-  return postJob
-      .doc('9Lsef0HyljJ6Zr7sWPvl')
-      .update({
+
+
+clearText() {
+  companyNameController.clear();
+  companylocationController.clear();
+  payrateController.clear();
+  jobDescreptionController.clear();
+  jobtypeController.clear();
+}
+
+class _pushNewJobState extends State<pushNewJob> {
+
+  CollectionReference postJob = FirebaseFirestore.instance.collection('PostJob');
+  @override
+  void initState(){
+  //  getUser();
+    super.initState();
+  }
+  List storedocs = [];
+  getUser() async {
+    var querySnapshots = await postJob.get();
+    for (var snapshot in querySnapshots.docs) {
+     storedocs = snapshot.id as List;
+    }
+  }
+  Object updateUser(
+      String jobType,
+      String companyName,
+      String CompanyLocation,
+      String payRate,
+      String jobDescription,
+      ) {
+    if (_formKey.currentState!.validate()) {
+      return postJob
+          .doc('9Lsef0HyljJ6Zr7sWPvl')
+          .update({
         "jobType": jobType,
         'companyName': companyName,
         'CompanyLocation': CompanyLocation,
         'payRate': payRate.toString(),
         'job Description': jobDescription,
+
       })
-      .then((value) => print("User Updated"))
-      .catchError((error) => print("Failed to update user: $error"));
-}
+          .then((value) => Fluttertoast.showToast(msg: "Job has been Updated"))
+          .catchError((error) => print("Failed to update user: $error"));
+    }
+    return {
+      Fluttertoast.showToast(msg: "Error")
+    };
 
-class _pushNewJobState extends State<pushNewJob> {
-  final Stream<QuerySnapshot> PostJobStream =
-      FirebaseFirestore.instance.collection('JobType').snapshots();
-
-  Future<void> deleteUser(id) {
-    // print("User Deleted $id");
-    return postJob
-        .doc(id)
-        .delete()
-        .then((value) => print('User Deleted'))
-        .catchError((error) => print('Failed to Delete user: $error'));
   }
 
+
+
+  String? ID;
   @override
   Widget build(BuildContext context) {
-    print(widget.userMap);
 
+      getUser();
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset(
@@ -258,6 +295,7 @@ class _pushNewJobState extends State<pushNewJob> {
         actionsIconTheme: IconThemeData(color: Colors.yellow, size: 36),
         backgroundColor: Color(0xff5ECC1A),
         elevation: (5),
+        shadowColor: Colors.yellow,
         titleSpacing: 7,
         title: Text(
           "Getjob",
@@ -281,6 +319,8 @@ class _pushNewJobState extends State<pushNewJob> {
                 );
               }
               final FirebaseAuth auth = FirebaseAuth.instance;
+              final Stream<QuerySnapshot> PostJobStream =
+              FirebaseFirestore.instance.collection('JobType').snapshots();
 
               return StreamBuilder<QuerySnapshot>(
                   stream: PostJobStream,
@@ -294,20 +334,13 @@ class _pushNewJobState extends State<pushNewJob> {
                         child: CircularProgressIndicator(),
                       );
                     }
-                    final List storedocs = [];
-                    snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map a = document.data() as Map<String, dynamic>;
-                      storedocs.add(a);
-                      a['id'] = document.id;
-                    }).toList();
-
                     return Container(
                       margin: EdgeInsets.all(12),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 100,
+                              height: 20,
                             ),
                             TextFormField(
                                 controller: jobtypeController,
@@ -315,28 +348,32 @@ class _pushNewJobState extends State<pushNewJob> {
                                   if (value!.isEmpty) {
                                     return ("field must not empty");
                                   }
-                                },
-                                onSaved: (value) {
-                                  jobtypeController.text = value!;
+                                  else {
+                                    onSaved:
+                                        (value) {
+                                      jobtypeController.text = value!;
+                                    };
+                                }
                                 },
                                 decoration: InputDecoration(
-                                    labelText: 'job type =>  ' +
-                                        widget.userMap!["jobType"].toString()),
+                                    labelText: 'job type  ' ),
                                 style: GoogleFonts.roboto(
                                     textStyle: TextStyle(fontSize: 20))),
                             TextFormField(
                                 controller: companylocationController,
                                 decoration: InputDecoration(
-                                    labelText: 'CompanyLocation =>  ' +
-                                        widget.userMap!["CompanyLocation"]
+                                    labelText: 'CompanyLocation  '
                                             .toString()),
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return ("field must not empty");
                                   }
-                                },
-                                onSaved: (value) {
-                                  companyNameController.text = value!;
+                                  else {
+                                    onSaved:
+                                        (value) {
+                                      companylocationController.text = value!;
+                                    };
+                                  }
                                 },
                                 style: GoogleFonts.roboto(
                                     textStyle: TextStyle(fontSize: 20))),
@@ -346,14 +383,15 @@ class _pushNewJobState extends State<pushNewJob> {
                                   if (value!.isEmpty) {
                                     return ("field must not empty");
                                   }
-                                },
-                                onSaved: (value) {
-                                  companylocationController.text = value!;
+                                  else {
+                                    onSaved:
+                                        (value) {
+                                      companyNameController.text = value!;
+                                    };
+                                  }
                                 },
                                 decoration: InputDecoration(
-                                    labelText: 'CompanyName =>  ' +
-                                        widget.userMap!["companyName"]
-                                            .toString()),
+                                    labelText: 'CompanyName  ' ),
                                 style: GoogleFonts.roboto(
                                     textStyle: TextStyle(fontSize: 20))),
                             TextFormField(
@@ -362,13 +400,15 @@ class _pushNewJobState extends State<pushNewJob> {
                                 if (value!.isEmpty) {
                                   return ("field must not empty");
                                 }
-                              },
-                              onSaved: (value) {
-                                companylocationController.text = value!;
+                                else {
+                                  onSaved:
+                                      (value) {
+                                    payrateController.text = value!;
+                                  };
+                                }
                               },
                               decoration: InputDecoration(
-                                  labelText: 'Pay rate =>  ' +
-                                      widget.userMap!["payRate"].toString()),
+                                  labelText: 'Pay rate   ' ),
                               style: GoogleFonts.roboto(
                                   textStyle: TextStyle(fontSize: 20)),
                             ),
@@ -376,27 +416,32 @@ class _pushNewJobState extends State<pushNewJob> {
                               controller: jobDescreptionController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return ("field must be filled");
+                                  return ("field must not empty");
+                                }
+                                else {
+                                  onSaved:
+                                      (value) {
+                                    jobDescreptionController.text = value!;
+                                  };
                                 }
                               },
-                              onSaved: (value) {
-                                jobDescreptionController.text = value!;
-                              },
                               decoration: InputDecoration(
-                                  labelText: 'Job description => ' +
-                                      widget.userMap!["job Description"]
-                                          .toString()),
+                                  labelText: 'Job description  '),
                               style: GoogleFonts.roboto(
                                   textStyle: TextStyle(fontSize: 20)),
                             ),
                             SizedBox(
-                              height: 100,
+                              height: 50,
                             ),
                             ElevatedButton.icon(
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(10),
-                                  shadowColor: MaterialStateProperty.all(
-                                      Colors.yellowAccent)),
+                              style:
+                                ElevatedButton.styleFrom(
+                                  elevation: 15,
+                                  padding: EdgeInsets.fromLTRB(20,10 , 20, 10),
+                                  shape: StadiumBorder(),
+                                  primary: Colors.green,
+                                  shadowColor: Colors.yellow,
+                                ),
                               label: Text('Update',
                                   style: GoogleFonts.pacifico(
                                       textStyle: TextStyle(
@@ -408,6 +453,7 @@ class _pushNewJobState extends State<pushNewJob> {
                                 color: Colors.red,
                               ),
                               onPressed: () {
+                                print(ID);
                                 updateUser(
                                   jobtypeController.text,
                                   companyNameController.text,
@@ -415,6 +461,7 @@ class _pushNewJobState extends State<pushNewJob> {
                                   payrateController.text.toString(),
                                   jobDescreptionController.text,
                                 );
+                                clearText();
                               },
                             ),
                           ],
